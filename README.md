@@ -1,15 +1,26 @@
 # Principles-of-Progamming-Project
 Start:
--Small introduction (character)
--Small introduction (situation) - Cave of fortunes has a mysterious item
-  1. Days of journeying through the forest
-  2. Finally stumbles upon the cave of fortune
-  3. Will you enter? --> Enters
-  4. Inventory: rope, torch, knife, water,
+  1. Small introduction (character)
+  2. Small introduction (situation) - Cave of fortunes has a mysterious item
+  3. Days of journeying through the forest
+  4. Finally stumbles upon the cave of fortune
+  5. At the door there is a message etched into the stone (each line is the clue for each room to pass without damage)
+  6. Will you enter? --> Enters
+  7. Inventory: rope, torch, knife
 
 Room 1: 
--After a bit of walking you enter a room
+  1. Room with beam at the top and chasm
+  2. Option 1: Swing across chasm --> will lose some health
+  3. Option 2: Follow the riddle to pry open a hidden compartment with knife --> will open a hidden pathway
+  4. At the end offered 2 items - gas mask (useful for room 3), pickaxe (useless)
 
+Room 2:
+  1. 
+
+Room 3:
+  1. Room including poisonous gas where player is going to take damage every 10 seconds.
+  2. Option 1: Use torch --> Gets rid of gas player takes damage
+  3. Option
 
 Final room:
   1. Gold, jewls, etc... littered across the floor
