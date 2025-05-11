@@ -29,6 +29,10 @@ int lose_health(int health, int loss)
     return health;
 } 
 
+int initialise_player()
+{
+    health 
+}
 
 int starting_room()
 {
