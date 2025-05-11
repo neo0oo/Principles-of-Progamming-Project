@@ -19,6 +19,9 @@ int lose_health(int health, int loss)
     if (health <= 0){
         printf("You have died. Would you like to restart? ");
         scanf("%c",&option_restart);
+        if (option_restart == "yes"){
+            starting_room();
+        }
     }
     else{
         printf("You have %c health", &health);
@@ -30,11 +33,12 @@ int lose_health(int health, int loss)
 int starting_room()
 {
     char option_1;
+    initialise_player();
     
     printf("After Days of journeying through the forest you stumble upon a cave\n");
     printf("Will you enter?");
     scanf("%c", &option_1);
-
+    
     return &option_1
 }
 
