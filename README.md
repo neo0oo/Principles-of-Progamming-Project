@@ -3,7 +3,7 @@
 - You always have 3 items in your inventory
 - Each room either requires items to use or has a puzzle type of thing
 - In the starting room outside of the cave you see a cryptic message inscribed in stone - This has a hint for each room to pass without taking damage
-- You have an inventoy which always has 3 items, with (each or some) rooms you are offered item(s) that you can replace your items for. **The room must always be passible no matter what items you have**
+- You have an inventoy which always has 3 items, with (each or some) rooms you are offered item(s) that you can replace your items for. **Each room must always be passible no matter what items you have**
 - The last room has a boss fight (idk what the way to beat it is yet) - you will always take initial damage at the start of the fight so you have to pass through the other rooms without taking too much damage
 - When you die you start from the very start of the game - the point of the game is to repeat it multiple times and learn the ways to pass each room before you can complete the game fully
 
