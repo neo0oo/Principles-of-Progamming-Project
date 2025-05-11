@@ -31,7 +31,7 @@ int lose_health(int health, int loss)
 
 int initialise_player()
 {
-    health = 100
+    int health = 100
     inventory
 }
 
