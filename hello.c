@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 char* getItem(int index) {
     static char* inventory[] = {"Knife", "Rope", "Torch"};
