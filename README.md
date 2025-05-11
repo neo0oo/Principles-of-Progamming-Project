@@ -10,16 +10,18 @@ Start:
 
 Room 1: 
   1. Room with beam at the top and chasm
-  2. Option 1: Swing across chasm --> will lose some health
-  3. Option 2: Follow the riddle to pry open a hidden compartment with knife --> will open a hidden pathway
-  4. At the end offered 2 items - gas mask (useful for room 3), pickaxe (useless)
+  2. Option 1: **Rope** Swing across the beam --> lose a bit of health 
+  3. Option 2: **Knife no torch** "you swing at nothing..." --> nothing happens
+  4. Option 3: **Torch** You light up the room and see a lose bit in the wall
+  5. Option 4: **Knife after torch** Pry open the lose bit in the wall --> Secret path opens --> pass the room with no damage taken
+  6. At the end offered 2 items - gas mask (useful for room 3), pickaxe (useless)
 
 Room 2:
   1. 
 
 Room 3:
   1. Room including poisonous gas where player is going to take damage every 10 seconds.
-  2. Option 1: Use torch --> Gets rid of gas player takes damage
+  2. Option 1: Use torch --> Light up the whole room - instant death
   3. Option
 
 Final room:
