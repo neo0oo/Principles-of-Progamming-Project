@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+
 int starting_room()
 {
     char option_1;
@@ -7,7 +8,21 @@ int starting_room()
     printf("After Days of journeying through the forest you stumble upon a cave\n");
     printf("Will you enter?");
     scanf("%c", &option_1);
+
+    return &option_1
 }
+
+
+int first_room()
+{
+    printf("You enter a dimly lit room, you see a large chasm with a beam above it, what would you like to do? ");
+    
+
+}
+
+
+
+
 
 int lose_health(int health, int loss)
 {
@@ -24,5 +39,10 @@ int lose_health(int health, int loss)
 } 
 
 int main(){
-    starting_room();
+    if (starting_room()) == "yes"{
+        first_room()
+
+    
+    
 }
+
