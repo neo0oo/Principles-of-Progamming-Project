@@ -7,6 +7,13 @@
 - The last room has a boss fight (idk what the way to beat it is yet) - you will always take initial damage at the start of the fight so you have to pass through the other rooms without taking too much damage
 - When you die you start from the very start of the game - the point of the game is to repeat it multiple times and learn the ways to pass each room before you can complete the game fully
 
+**New stuff after presentation**
+rooms as parameters all in one function
+grade at the end depending on health (user efficiency)
+go back and forth between rooms
+display items in inventory at the start of every room
+display both items in inventory and items to pick up at the end of each room
+
 Start:
   1. Small introduction (character)
   2. Small introduction (situation) - Cave of fortunes has a mysterious item
