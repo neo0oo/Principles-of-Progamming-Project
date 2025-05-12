@@ -24,7 +24,7 @@ int lose_health(int health, int loss)
         }
     }
     else{
-        printf("You have %d health", &health);
+        printf("You have %d health", health);
     }
     return health;
 } 
@@ -52,29 +52,39 @@ int starting_room() {
 
 int first_room()
 {
-    int chasm_option;
-    printf("You enter a dimly lit room, you see a large chasm with a beam above it, what would you like to do?\n");
-    printf("Option 1: Rope Swing across the beam\n");
-    printf("Option 2: Use your knife\n");
-    printf("Option 3: Use your torch and knife");
-    scanf("%d", &chasm_option);
+    int chasm_option = 0;
+    
+    while (1) {
+        printf("\nYou enter a dimly lit room. You see a large chasm with a beam above it. What would you like to do?\n");
+        printf("Option 1: Rope Swing across the beam\n");
+        printf("Option 2: Use your knife\n");
+        printf("Option 3: Use your torch and knife\n");
+        printf("Choose an option (1-3): ");
+        scanf("%d", &chasm_option);
+        getchar(); 
 
-    if (chasm_option == 1){
-        printf("You have lost 10 health");
-        lose_health(100, 10);
+        if (chasm_option == 1){
+            printf("You have lost 10 health. ");
+            lose_health(100, 10);
+            break;
+        }
+        else if (chasm_option == 2){
+            printf("You swing at nothing... That didn't work. Try again.\n");
+        }
+        else if (chasm_option == 3){
+            char item_Option1[20];
+            printf("You use your torch and see a loose bit on the wall. You use your knife to pry it open. A secret passage opens.\n");
+            printf("2 items are on the floor: a gas mask and a pickaxe. Which one do you pick? Choose wisely: ");
+            scanf("%s", item_Option1);
+            printf("You picked the %s.\n", item_Option1);
+            break;
+        }
+        else{
+            printf("That is not a valid option. Please choose 1, 2, or 3.\n");
+        }
     }
-    else if (chasm_option == 2){
-        printf("You swing at nothing, pick another option");
-    }
-    else if (chasm_option == 3){
-        char item_Option1[20];
-        printf("You use your torch and see a loose bit on the wall. You then use your knife to ply the loose bit and a secret passage opens.\n");
-        printf("2 items are on the floor. There is a gas mask and a pickaxe. Which one do you pick? Choose Wisely: ");
-        scanf("%c", &item_Option1);
-    }
-    else{
-        printf("That is not an option, please pick again");
-    }
+
+    return 0;
 }
 
 int main() {
