@@ -50,41 +50,62 @@ int starting_room() {
     }
 }
 
-int first_room()
-{
-    int chasm_option = 0;
-    
+int first_room() {
+    char* chosen_item;
+    int player_health = 100;
+
     while (1) {
-        printf("\nYou enter a dimly lit room. You see a large chasm with a beam above it. What would you like to do?\n");
-        printf("Option 1: Rope Swing across the beam\n");
-        printf("Option 2: Use your knife\n");
-        printf("Option 3: Use your torch and knife\n");
-        printf("Choose an option (1-3): ");
-        scanf("%d", &chasm_option);
+        printf("\nDimly lit room. Large chasm, beam above. Pick an item or try to cross.\nInventory:\n");
+        int total_items = 0;
+        while(strcmp(getItem(total_items), "Invalid item") != 0){
+            printf("%d: %s\n", total_items + 1, getItem(total_items));
+            total_items++;
+        }
+        printf("%d: Try to cross without an item\nChoose (1-%d): ", total_items + 1, total_items + 1);
+
+        int choice;
+        if (scanf("%d", &choice) != 1) {
+            while (getchar() != '\n');
+            printf("Invalid input. Enter a number.\n");
+            continue;
+        }
         getchar(); 
 
-        if (chasm_option == 1){
-            printf("You have lost 10 health. ");
-            lose_health(100, 10);
-            break;
-        }
-        else if (chasm_option == 2){
-            printf("You swing at nothing... That didn't work. Try again.\n");
-        }
-        else if (chasm_option == 3){
-            char item_Option1[20];
-            printf("You use your torch and see a loose bit on the wall. You use your knife to pry it open. A secret passage opens.\n");
-            printf("2 items are on the floor: a gas mask and a pickaxe. Which one do you pick? Choose wisely: ");
-            scanf("%s", item_Option1);
-            printf("You picked the %s.\n", item_Option1);
-            break;
-        }
-        else{
-            printf("That is not a valid option. Please choose 1, 2, or 3.\n");
-        }
-    }
+        if (choice >= 1 && choice <= total_items) {
+            chosen_item = getItem(choice - 1);
+            printf("You use: %s\n", chosen_item);
 
-    return 0;
+            if (strcmp(chosen_item, "Rope") == 0) {
+                printf("Used Rope to swing across the chasm. Made it safely!\nChallenge Passed.\n");
+                return 0;
+            } else if (strcmp(chosen_item, "Knife") == 0) {
+                printf("Waving the Knife at the chasm doesn't help. Try again.\n");
+            } else if (strcmp(chosen_item, "Torch") == 0) {
+                printf("Torch light reveals a loose wall section. You use your Knife to pry it open. Secret passage!\n");
+                char secret_item_choice[20];
+                printf("Items found: 'gasmask', 'pickaxe'. Pick one: ");
+                if (scanf("%19s", secret_item_choice) == 1) {
+                    getchar(); 
+                    if (strcmp(secret_item_choice, "gasmask") == 0 || strcmp(secret_item_choice, "pickaxe") == 0) {
+                        printf("Picked %s.\n", secret_item_choice);
+                    } else {
+                        printf("Didn't pick a valid item from passage.\n");
+                    }
+                } else {
+                    while (getchar() != '\n');
+                    printf("No item picked from passage.\n");
+                }
+                printf("New path found!\n");
+                return 0;
+            }
+        } else if (choice == total_items + 1) {
+            printf("Attempting to cross without items... You slip and fall! Ouch!\n");
+            lose_health(player_health, 25);
+            printf("Climbed back, weakened.\n");
+        } else {
+            printf("Invalid option.\n");
+        }
+    } 
 }
 
 int main() {
