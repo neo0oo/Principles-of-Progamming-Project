@@ -44,10 +44,10 @@ Start:
 
 Room 1: A cavern with a high beam and wide chasm.
 
-    Option 1: Rope Swing with Rope --> Lose 5 health. Proceed to Room 2.
-    Option 2: Knife Strike air with Knife --> Nothing happens. Remain in Room 1.
-    Option 3: Torch Light torch to search --> The room is illuminated. You notice something about the wall. Remain in Room 1. (This enables Option 4)
-    Option 4: (Only available after choosing Option 3) Pry wall after torch --> Secret path opens --> Pass the room with no damage taken. Proceed to Room 2. No items are offered or picked up in this room based on the code. If player health drops to 0, game restarts from the beginning.
+    Option 1: **Take damage + pass room** Rope Swing with Rope --> Lose 5 health. Proceed to Room 2.
+    Option 2: **Nothing** Knife Strike air with Knife --> Nothing happens. Remain in Room 1.
+    Option 3: **Activate other item **Torch Light torch to search --> The room is illuminated. You notice something about the wall. Remain in Room 1. (This enables Option 4)
+    Option 4: **Pass room** (Only available after choosing Option 3) Pry wall after torch --> Secret path opens --> Pass the room with no damage taken. Proceed to Room 2. No items are offered or picked up in this room based on the code. If player health drops to 0, game restarts from the beginning.
 
 Room 2: Three platforms ahead. Choose left or right step by step.
 The clue "In football, think 1-2-1" suggests a pattern (likely Right, Left, Right). You must choose correctly three times. An incorrect step costs 10 health and keeps you in the room to try that step again (or forces a full restart if health is depleted).
