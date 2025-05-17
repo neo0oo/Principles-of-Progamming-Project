@@ -1,3 +1,10 @@
+Options per room:
+1: 4
+2: 2
+3: 6
+4: ?
+
+
 # Principles-of-Progamming-Project
 **How the game works**
 - You always have 3 items in your inventory
@@ -47,11 +54,12 @@ if player loses in this round he restarts back to the beginning of the room he i
 Room 3:
   1. Room including  alot of rocks covering the path to room 4 and poisonous gas where player is going to take damage.
   2. Option 1: Use torch --> Light up the whole room - instant death
-  3. Option 2: Use rope --> Instant death since it would benefit with nothing
-  4. Option 3 : Use knife--> To destroy the machine that projects this gas and take 10 damage then remove all the rocks blocking the path
-  5. Option 4 : Use picked up Pickaxe (from room 1) --> To destroy the machine that projects this gas and take 10 damage then remove all the rocks blocking the path 
-  6. Option 5: Use picked up Gas Mask (from room 1) --> Takes no damage and is able to find his way out through having the time to remove all the rocks in front of the path
-  7. Player would have the option on picking up Heavy machine gun or Speed shoes or Angelic wings
+  3. Option 2: Use rope --> Nothing happens
+  4. Option 3 : Use knife--> To destroy the machine that projects this gas and take 10 damage
+  5. Option 4 : Use picked up Pickaxe (from room 1) --> To destroy the machine that projects this gas and take 10 damage then remove all the rocks blocking the path
+  6. Option 5 : Use pickaxe after knife --> remove the rocks in the path
+  7. Option 6 : Use picked up Gas Mask (from room 1) --> Takes no damage and is able to find his way out through having the time to remove all the rocks in front of the path
+  8. Player would have the option on picking up Heavy machine gun or Speed shoes or Angelic wings
 
 if player loses in this round he restarts back to the beginning of the room he is in
 
