@@ -1,8 +1,8 @@
 Options per room:
-1: 4
-2: 2
-3: 6
-4: ?
+- 1: 4
+- 2: 2
+- 3: 6
+- 4: ?
 
 
 # Principles-of-Progamming-Project
