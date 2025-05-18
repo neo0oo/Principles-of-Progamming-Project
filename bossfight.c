@@ -1,9 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
-#include <sys/select.h>
-#include <time.h>
 
 #define MAX_INPUT 100
 
@@ -14,25 +11,15 @@ typedef struct {
     const char *type;  // "magic" or "physical"
 } BossAttack;
 
-int timed_input(char *buffer, int size, int timeout_seconds) {
-    fd_set set;
-    struct timeval timeout;
-
-    FD_ZERO(&set);
-    FD_SET(STDIN_FILENO, &set);
-
-    timeout.tv_sec = timeout_seconds;
-    timeout.tv_usec = 0;
-
-    int rv = select(STDIN_FILENO + 1, &set, NULL, NULL, &timeout);
-    if (rv <= 0) return 0;
+// Simple input helper
+void get_input(char *buffer, int size) {
+    printf("> ");
     fgets(buffer, size, stdin);
-    buffer[strcspn(buffer, "\n")] = '\0';
-    return 1;
+    buffer[strcspn(buffer, "\n")] = '\0';  // Strip newline
 }
 
 int main() {
-    srand(time(NULL));
+    srand((unsigned)time(NULL));
     int player_hp = 100, boss_hp = 100;
     char input[MAX_INPUT];
     int dodged = 0;
@@ -50,72 +37,65 @@ int main() {
     printf("⚔️  Final Boss Battle Begins!\n");
 
     while (player_hp > 0 && boss_hp > 0) {
-        // --- Boss attack ---
+        // --- Boss Turn ---
         last_attack = attacks[rand() % num_attacks];
         dodged = 0;
 
-        printf("\nBoss %s! (Options: duck | jump | block)\n", last_attack.description);
-        printf("React in 5 seconds: "); fflush(stdout);
+        printf("\n👹 Boss %s!\n", last_attack.description);
+        printf("How do you react? (duck / jump / block)\n");
+        get_input(input, MAX_INPUT);
 
-        int responded = timed_input(input, MAX_INPUT, 5);
-        if (!responded || strcmp(input, last_attack.correct_response) != 0) {
-            printf("\nYou failed to react! Lost %d HP.\n", last_attack.damage);
-            player_hp -= last_attack.damage;
-        } else {
-            printf("✅ Dodged it!\n");
+        if (strcmp(input, last_attack.correct_response) == 0) {
+            printf("✅ You dodged the attack!\n");
             dodged = 1;
+        } else {
+            printf("❌ Wrong move! You took %d damage.\n", last_attack.damage);
+            player_hp -= last_attack.damage;
         }
 
         if (player_hp <= 0) break;
 
-        // --- Player attack ---
+        // --- Player Turn ---
         if (dodged) {
-            printf("\nYour turn! Attack with: slash | kick\n");
-            printf("You have 5 seconds: "); fflush(stdout);
+            printf("\nYour turn to attack! (slash / kick)\n");
+            get_input(input, MAX_INPUT);
 
-            responded = timed_input(input, MAX_INPUT, 5);
-            if (!responded) {
-                printf("\nToo slow! You missed your chance.\n");
-            } else if (strcmp(input, "slash") == 0 || strcmp(input, "kick") == 0) {
-                int dmg = 10 + rand() % 6; // base 10–15
-                int bonus = 5;
-
+            if (strcmp(input, "slash") == 0 || strcmp(input, "kick") == 0) {
+                int dmg = 10 + rand() % 6;  // Base 10–15
                 if ((strcmp(input, "slash") == 0 && strcmp(last_attack.type, "physical") == 0) ||
                     (strcmp(input, "kick") == 0 && strcmp(last_attack.type, "magic") == 0)) {
-                    dmg += bonus;
-                    printf("💥 Super effective! Bonus damage.\n");
+                    dmg += 5;
+                    printf("💥 Super effective attack! Bonus damage!\n");
+                } else {
+                    printf("You strike the boss!\n");
                 }
-
-                printf("You hit the boss for %d damage!\n", dmg);
+                printf("You dealt %d damage.\n", dmg);
                 boss_hp -= dmg;
             } else {
-                printf("Invalid move. You missed.\n");
+                printf("❓ Invalid move! You missed your attack.\n");
             }
         } else {
-            printf("\nYou couldn't attack — still recovering!\n");
+            printf("\n😵 You're still recovering and couldn't attack.\n");
         }
 
         printf("\n❤️ You: %d HP | 👹 Boss: %d HP\n", player_hp, boss_hp);
     }
 
+    // --- Game Over ---
+    printf("\n==============================\n");
     if (player_hp <= 0) {
-        printf("\n💀 You died. Game Over.\n");
+        printf("💀 You were defeated. Game Over.\n");
     } else {
-        printf("\n🏆 You defeated the boss! Victory!\n");
-
+        printf("🏆 You defeated the boss! Victory!\n");
         printf("Your final HP: %d\n", player_hp);
+
         printf("Score: ");
-        if (player_hp == 100) {
-            printf("S\n");
-        } else if (player_hp >= 81) {
-            printf("A+\n");
-        } else if (player_hp >= 71) {
-            printf("B\n");
-        } else if (player_hp >= 61) {
-            printf("C\n");
-        } else {
-            printf("D\n");
-        }
+        if (player_hp == 100)      printf("S (Perfect!)\n");
+        else if (player_hp >= 81) printf("A+\n");
+        else if (player_hp >= 71) printf("B\n");
+        else if (player_hp >= 61) printf("C\n");
+        else                      printf("D\n");
     }
 
+    return 0;
 }
