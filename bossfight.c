@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #define MAX_INPUT 100
 
@@ -8,14 +9,13 @@ typedef struct {
     const char *description;
     const char *correct_response;
     int damage;
-    const char *type;  // "magic" or "physical"
+    const char *type; 
 } BossAttack;
 
-// Simple input helper
 void get_input(char *buffer, int size) {
     printf("> ");
     fgets(buffer, size, stdin);
-    buffer[strcspn(buffer, "\n")] = '\0';  // Strip newline
+    buffer[strcspn(buffer, "\n")] = '\0';
 }
 
 int main() {
@@ -37,7 +37,6 @@ int main() {
     printf("⚔️  Final Boss Battle Begins!\n");
 
     while (player_hp > 0 && boss_hp > 0) {
-        // --- Boss Turn ---
         last_attack = attacks[rand() % num_attacks];
         dodged = 0;
 
@@ -55,13 +54,12 @@ int main() {
 
         if (player_hp <= 0) break;
 
-        // --- Player Turn ---
         if (dodged) {
             printf("\nYour turn to attack! (slash / kick)\n");
             get_input(input, MAX_INPUT);
 
             if (strcmp(input, "slash") == 0 || strcmp(input, "kick") == 0) {
-                int dmg = 10 + rand() % 6;  // Base 10–15
+                int dmg = 10 + rand() % 6;
                 if ((strcmp(input, "slash") == 0 && strcmp(last_attack.type, "physical") == 0) ||
                     (strcmp(input, "kick") == 0 && strcmp(last_attack.type, "magic") == 0)) {
                     dmg += 5;
@@ -81,7 +79,6 @@ int main() {
         printf("\n❤️ You: %d HP | 👹 Boss: %d HP\n", player_hp, boss_hp);
     }
 
-    // --- Game Over ---
     printf("\n==============================\n");
     if (player_hp <= 0) {
         printf("💀 You were defeated. Game Over.\n");
