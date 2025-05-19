@@ -1,8 +1,11 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdlib.h>
+#include <time.h>
 
 #define TOTAL_ITEMS 4
+#define MAX_INPUT 10
 
 static int play = 1;
 static int has_totem = 0;
@@ -11,6 +14,13 @@ typedef struct{
     char* inventory[TOTAL_ITEMS];
     int health;
 } stats;
+
+typedef struct {
+    const char *description;
+    const char *correct_response;
+    int damage;
+    const char *type; 
+} BossAttack;
 
 static void flush_stdin(){
     int c;
@@ -49,6 +59,15 @@ void start() {
         fflush(stdout);
         scanf(" %c", &response);
         flush_stdin();
+    }
+}
+
+void get_input(char *buffer, int size) {
+    printf("> ");
+    fgets(buffer, size, stdin);
+    buffer[strcspn(buffer, "\n")] = '\0';
+    for (char *c = buffer; *c; c++){
+        *c = tolower((unsigned char)*c);
     }
 }
 
@@ -179,7 +198,7 @@ int room2(stats *player){
                     step++;
                     if (wrong[0] && wrong[1] && wrong[2]){
                         printf("\n\n\n*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*\n");
-                        printf("\n\nWhat's this?\n\nSo many mistakes...\n\nThe gods of the cave feel bad for you.\n\n[!] You've been gifted a HOLY TOTEM and your wounds have been healed.");
+                        printf("\nWhat's this?\n\nSo many mistakes...\n\nThe gods of the cave feel bad for you.\n\n[!] You've been gifted a HOLY TOTEM and your wounds have been healed.");
                         printf("\n\n*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*\n\n\n");
                         has_totem = 1;
                         player->health = 100;
@@ -250,7 +269,7 @@ int room3(stats *player){
                     break;
                 
                 case 4:
-                    printf("\n[~] You put on the GASMASK. You feel your way through the gas to the exit.\n[!] Challenge Passed.\n");
+                    printf("\n[~] You put on the GASMASK and make your way through the gas to the exit.\n[!] Challenge Passed.\n");
                     printf("\n\n==================================================[ LEVEL FOUR ]==================================================\n\n");
                     next = 1;
                     break;
@@ -276,7 +295,7 @@ int room4(stats *player){
                     case 1:
                         printf("\n[~] You fight them off with the KNIFE but are injured in the process.\n[!] Challenge Passed.\n");
                         lose_health(player, 10);
-                        printf("\n\n==================================================[ LEVEL FOUR ]==================================================\n\n");
+                        printf("\n\n==================================================[ BOSS FIGHT ]==================================================\n\n");
                         next = 1;
                         break;
 
@@ -293,13 +312,13 @@ int room4(stats *player){
                     
                     case 4:
                         printf("\n[~] Wielding the PICKAXE, you manage to fend off the skeletons.\n[!] Challenge Passed.\n");
-                        printf("\n\n==================================================[ LEVEL FOUR ]==================================================\n\n");
+                        printf("\n\n==================================================[ BOSS FIGHT ]==================================================\n\n");
                         next = 1;
                         break;
 
                     case 5:
                         printf("\n[~] The skeletons recoil at the sight of the totem. You pass unharmed.\n[!] Challenge Passed.\n");
-                        printf("\n\n==================================================[ LEVEL FOUR ]==================================================\n\n");
+                        printf("\n\n==================================================[ BOSS FIGHT ]==================================================\n\n");
                         next = 1;
                         break;
                 }
@@ -310,7 +329,7 @@ int room4(stats *player){
                     case 1:
                         printf("\n[~] You fight them off with the KNIFE but are injured in the process.\n[!] Challenge Passed.\n");
                         lose_health(player, 10);
-                        printf("\n\n==================================================[ LEVEL FOUR ]==================================================\n\n");
+                        printf("\n\n==================================================[ BOSS FIGHT ]==================================================\n\n");
                         next = 1;
                         break;
 
@@ -333,7 +352,7 @@ int room4(stats *player){
 
                     case 5:
                         printf("\n[~] The skeletons recoil at the sight of the totem. You pass unharmed.\n[!] Challenge Passed.\n");
-                        printf("\n\n==================================================[ LEVEL FOUR ]==================================================\n\n");
+                        printf("\n\n==================================================[ BOSS FIGHT ]==================================================\n\n");
                         next = 1;
                         break;
                 }
@@ -345,7 +364,7 @@ int room4(stats *player){
                     case 1:
                         printf("\n[~] You fight them off with the KNIFE but are injured in the process.\n[!] Challenge Passed.\n");
                         lose_health(player, 10);
-                        printf("\n\n==================================================[ LEVEL FOUR ]==================================================\n\n");
+                        printf("\n\n==================================================[ BOSS FIGHT ]==================================================\n\n");
                         next = 1;
                         break;
 
@@ -362,7 +381,7 @@ int room4(stats *player){
                     
                     case 4:
                         printf("\n[~] Wielding the PICKAXE, you manage to fend off the skeletons.\n[!] Challenge Passed.\n");
-                        printf("\n\n==================================================[ LEVEL FOUR ]==================================================\n\n");
+                        printf("\n\n==================================================[ BOSS FIGHT ]==================================================\n\n");
                         next = 1;
                         break;
                 }
@@ -373,7 +392,7 @@ int room4(stats *player){
                     case 1:
                         printf("\n[~] You fight them off with the KNIFE but are injured in the process.\n[!] Challenge Passed.\n");
                         lose_health(player, 10);
-                        printf("\n\n==================================================[ LEVEL FOUR ]==================================================\n\n");
+                        printf("\n\n==================================================[ BOSS FIGHT ]==================================================\n\n");
                         next = 1;
                         break;
 
@@ -396,9 +415,79 @@ int room4(stats *player){
 
                 }
             }
-    }
+        }
+    has_totem = 0;
     return next;
     }
+}
+
+int bossFight(stats *player) {
+    srand((unsigned)time(NULL));
+    int boss_hp = 100;
+    char input[MAX_INPUT];
+
+    BossAttack attacks[] = {
+        {"swings a sword", "duck", 10, "physical"},
+        {"throws a fireball", "jump", 15, "magic"},
+        {"charges at you", "block", 20, "physical"},
+        {"stabs low", "jump", 10, "physical"},
+        {"casts lightning", "block", 15, "magic"}
+    };
+    int num_attacks = sizeof(attacks) / sizeof(BossAttack);
+    BossAttack attack;
+
+    printf("[!] Final Boss Battle Begins!\n");
+
+    while (player->health > 0 && boss_hp > 0) {
+        attack = attacks[rand() % num_attacks];
+        int dodged = 0;
+
+        printf("\n[!] Boss %s!\n", attack.description);
+        printf("How do you react? (Duck / Jump / Block)\n");
+        get_input(input, MAX_INPUT);
+
+        if (strcmp(input, attack.correct_response) == 0) {
+            printf("[~] You dodged the attack!\n");
+            dodged = 1;
+        } else {
+            printf("[~] Wrong move! You took %d damage.\n", attack.damage);
+            player->health -= attack.damage;
+        }
+
+        if (player->health <= 0){return 0;}
+
+        if (dodged) {
+            printf("\nYour turn to attack! (Slash / Kick)\n");
+            get_input(input, MAX_INPUT);
+
+            if (strcmp(input, "slash") == 0 || strcmp(input, "kick") == 0) {
+                int dmg = 10 + rand() % 6;
+                if ((strcmp(input, "slash") == 0 && strcmp(attack.type, "physical") == 0) ||
+                    (strcmp(input, "kick") == 0 && strcmp(attack.type, "magic") == 0)) {
+                    dmg += 5;
+                    printf("[~] Super effective attack! Bonus damage!\n");
+                } else {
+                    printf("You strike the boss!\n");
+                }
+                printf("You dealt %d damage.\n", dmg);
+                boss_hp -= dmg;
+            } else {
+                printf("[!] Invalid move! You missed your attack.\n");
+            }
+        } else {
+            printf("\n[!] You're still recovering and couldn't attack.\n");
+        }
+
+        printf("\nYou: %d HP | Boss: %d HP\n", player->health, boss_hp);
+    }
+
+    if (player->health <= 0) {
+        printf("\n\n==================================================[ GAME OVER ]==================================================\n\n");
+    } else {
+        printf("\n\n==================================================[ VICTORY ]==================================================\n\n");
+    }
+
+    return 1;
 }
 
 int game_loop(stats *player){
@@ -426,6 +515,9 @@ int game_loop(stats *player){
     }
 
     // Boss Fight
+    while (player->health > 0 && bossFight(player) != 1){
+        if (player->health <= 0) return 0;
+    }
 
     // Victory!
     return 1;
@@ -449,7 +541,7 @@ int main() {
 
         int result = game_loop(&player);
 
-        if (!result){
+        if (result == 0){
             do {
                 printf("\n[!] You have died. Would you like to restart? (y/N): ");
                 scanf(" %c", &restart);
@@ -458,7 +550,7 @@ int main() {
             } while (restart != 'y' && restart != 'n');
         } 
         else {
-            printf("\nCONGRATULATIONS, YOU WON!\nYour final HP was: %d\nGrade: %c\n\nPlay again? (y/N): ", 
+            printf("\n\n\nCONGRATULATIONS, YOU WON!\nYour final HP was: %d\nGrade: %c\n\nPlay again? (y/N): ", 
                 player.health, 
                 grade(player.health));
             scanf(" %c", &restart);

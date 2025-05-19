@@ -5,7 +5,7 @@
 #include <ctype.h> // Added for isprint()
 
 #if defined(_WIN32) || defined(_WIN64)
-  #include <curses.h>   // PDCurses
+#include <curses.h>   // PDCurses
 #else
   #include <ncurses.h>  // ncurses
 #endif
